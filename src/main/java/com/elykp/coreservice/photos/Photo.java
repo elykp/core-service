@@ -52,8 +52,8 @@ public class Photo {
   @ManyToMany
   @JoinTable(
       name = "photo_tags",
-      joinColumns = @JoinColumn(name = "photo_id"),
-      inverseJoinColumns = @JoinColumn(name = "tag_id")
+      joinColumns = @JoinColumn(name = "photo_id", nullable = false, updatable = false),
+      inverseJoinColumns = @JoinColumn(name = "tag_id", nullable = false)
   )
   private Set<Tag> tags = new HashSet<>();
 
