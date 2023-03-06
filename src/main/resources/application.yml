@@ -1,0 +1,51 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: core-service
+  data:
+    redis:
+      database: 0
+      host: ${REDIS_HOST:localhost}
+      port: ${REDIS_PORT:6379}
+      # password: ${REDIS_PASSWORD:040799Khoa}
+      timeout: ${REDIS_TIMEOUT:60000}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: ${OAUTH_AUTHORITY:http://localhost:8080/realms/elykp}
+          jwk-set-uri: ${OAUTH_JWKS_URI:http://localhost:8080/realms/elykp/protocol/openid-connect/certs}
+  datasource:
+    url: ${ELYKP_CONNECTION_URL:jdbc:postgresql://localhost:5432/elykp_dev}
+    username: postgres
+    password: 040799
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+    properties:
+      hibernate:
+        '[format_sql]': true
+        jdbc:
+          '[time_zone]': UTC
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+
+web:
+  cors:
+    allowed-origins: ${ALLOWED_ORIGINS:http://localhost:5173,http://127.0.0.1:5173}
+
+oauth:
+  scope: ${SCOPE:SCOPE_elykp-resources-api}
+  authority: ${OAUTH_AUTHORITY:http://localhost:8080/realms/elykp}
+  client-id: ${OAUTH_CLIENT_ID:elykp-api}
+  client-secret: ${OAUTH_CLIENT_SECRET:DxAuJhbxagzNaslSFwX37QqS7zUg9P2e}
+  authority-api-url: ${OAUTH_AUTHORITY_API_URL:http://localhost:8080/admin/realms/elykp}
