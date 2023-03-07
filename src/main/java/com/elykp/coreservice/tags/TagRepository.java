@@ -13,7 +13,5 @@ public interface TagRepository extends JpaRepository<Tag, Long> {
   @Query(nativeQuery = true)
   List<TagDto> findTrendingTags();
 
-  boolean existsByNameIgnoreCase(String name);
-
   Optional<Tag> findByNameIgnoreCase(String name);
 }

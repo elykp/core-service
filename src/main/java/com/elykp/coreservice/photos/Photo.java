@@ -12,12 +12,16 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.Set;
-import lombok.Data;
 
 import java.time.Instant;
 import java.util.HashSet;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @Table(name = "photo_entity", uniqueConstraints = {
     @UniqueConstraint(name = "UNIQUE_ID_CONSTRAINT", columnNames = {"id"})
@@ -42,9 +46,6 @@ public class Photo {
 
   @Column(columnDefinition = "boolean default false")
   private Boolean nsfw;
-
-  @Column(length = 30, nullable = false)
-  private String blurhash;
 
   @Column(name = "created_at")
   private Long createdAt;

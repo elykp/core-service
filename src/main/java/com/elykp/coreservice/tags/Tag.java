@@ -19,9 +19,13 @@ import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
-import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
 @Entity
 @NamedNativeQuery(name = "Tag.findTrendingTags",
     query = "SELECT tag_entity.id, tag_entity.name, COUNT(*) " +
