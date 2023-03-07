@@ -1,5 +1,6 @@
 package com.elykp.coreservice.photos;
 
+import com.elykp.coreservice.assets.Asset;
 import com.elykp.coreservice.tags.Tag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -8,13 +9,13 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import java.util.Set;
-
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -47,6 +48,12 @@ public class Photo {
   @Column(columnDefinition = "boolean default false")
   private Boolean nsfw;
 
+  @Column(length = 30, nullable = false)
+  private String blurhash;
+
+  @Column(columnDefinition = "boolean default false")
+  private boolean isDeleted;
+
   @Column(name = "created_at")
   private Long createdAt;
 
@@ -57,6 +64,9 @@ public class Photo {
       inverseJoinColumns = @JoinColumn(name = "tag_id", nullable = false)
   )
   private Set<Tag> tags = new HashSet<>();
+
+  @OneToMany(mappedBy = "photo")
+  private Set<Asset> assets = new HashSet<>();
 
   @PrePersist
   protected void prePersist() {

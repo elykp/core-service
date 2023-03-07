@@ -1,5 +1,6 @@
 package com.elykp.coreservice.photos;
 
+import com.elykp.coreservice.photos.dto.CreatePhotoDto;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
