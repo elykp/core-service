@@ -13,8 +13,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.time.Instant;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,8 +20,6 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Builder
-@AllArgsConstructor
 @Entity
 @Table(name = "asset_entity")
 public class Asset {
@@ -35,13 +31,16 @@ public class Asset {
   private String ownerId;
 
   @Column(columnDefinition = "varchar(255) default ''")
-  private String path;
+  private String url;
 
   @Column(nullable = false)
   private Integer width;
 
   @Column(nullable = false)
   private Integer height;
+
+  @Column(name = "responsive_key", nullable = false, length = 20)
+  private String responsiveKey;
 
   @Column(name = "created_at")
   private Long createdAt;

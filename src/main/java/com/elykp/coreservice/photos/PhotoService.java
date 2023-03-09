@@ -1,8 +1,9 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.photos.dto.CreatePhotoDto;
+import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
+import com.elykp.coreservice.photos.dto.PhotoRS;
 
 public interface PhotoService {
 
-  Photo createPhoto(CreatePhotoDto createPhotoDto, String userId);
+  PhotoRS createPhoto(CreatePhotoRQ createPhotoRQ, String userId);
 }

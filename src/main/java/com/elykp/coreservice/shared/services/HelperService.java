@@ -1,4 +1,4 @@
-package com.elykp.coreservice.shared;
+package com.elykp.coreservice.shared.services;
 
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import org.springframework.stereotype.Service;

@@ -7,7 +7,7 @@ import java.util.List;
 import lombok.Getter;
 
 @Getter
-public class CreatePhotoDto {
+public class CreatePhotoRQ {
   @NotBlank(message = "Title cannot be blank")
   private String title;
 

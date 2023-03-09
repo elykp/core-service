@@ -1,6 +1,7 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.photos.dto.CreatePhotoDto;
+import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
+import com.elykp.coreservice.photos.dto.PhotoRS;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -36,10 +37,10 @@ public class PhotoController {
 
   @PostMapping
   @PreAuthorize("isAuthenticated()")
-  public ResponseEntity<Photo> create(
+  public ResponseEntity<PhotoRS> create(
       JwtAuthenticationToken authentication,
-      @Valid @RequestBody CreatePhotoDto createPhotoDto) {
-    Photo photo = photoService.createPhoto(createPhotoDto,
+      @Valid @RequestBody CreatePhotoRQ createPhotoRQ) {
+    PhotoRS photo = photoService.createPhoto(createPhotoRQ,
         authentication.getTokenAttributes().get("sub").toString());
 
     return new ResponseEntity<>(photo, HttpStatus.CREATED);
