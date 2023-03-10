@@ -1,11 +1,9 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.assets.Asset;
-import com.elykp.coreservice.assets.AssetRepository;
 import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
 import com.elykp.coreservice.photos.dto.PhotoRS;
 import com.elykp.coreservice.photos.mapper.PhotoMapper;
-import com.elykp.coreservice.shared.services.HelperService;
+import com.elykp.coreservice.users.services.HelperService;
 import com.elykp.coreservice.tags.Tag;
 import com.elykp.coreservice.tags.TagRepository;
 import jakarta.transaction.Transactional;
@@ -23,7 +21,6 @@ public class PhotoServiceImpl implements PhotoService {
 
   private final TagRepository tagRepository;
 
-  private final AssetRepository assetRepository;
 
   @Override
   @Transactional
@@ -46,16 +43,6 @@ public class PhotoServiceImpl implements PhotoService {
         photo.getTags().add(tagRepository.save(newTag));
       }
     }
-
-    Asset asset = new Asset();
-    asset.setWidth(100);
-    asset.setHeight(100);
-    asset.setOwnerId(userId);
-    asset.setUrl("/test");
-    asset.setResponsiveKey("image100");
-    asset.setPhoto(photoRepository.save(photo));
-
-    photo.getAssets().add(assetRepository.save(asset));
 
     return PhotoMapper.INSTANCE.mapPhotoToPhotoRS(photoRepository.save(photo));
   }
