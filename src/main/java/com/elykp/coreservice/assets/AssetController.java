@@ -3,7 +3,6 @@ package com.elykp.coreservice.assets;
 import com.elykp.coreservice.assets.dto.AssetRS;
 import com.elykp.coreservice.assets.mapper.AssetMapper;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
