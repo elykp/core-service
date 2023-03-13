@@ -17,7 +17,7 @@
   <properties>
     <java.version>17</java.version>
     <spring-cloud.version>2022.0.1</spring-cloud.version>
-    <org.lombok.version>1.18.18</org.lombok.version>
+    <org.lombok.version>1.18.22</org.lombok.version>
     <org.mapstruct.version>1.4.2.Final</org.mapstruct.version>
     <org.mapstruct-lombok.version>0.2.0</org.mapstruct-lombok.version>
     <org.flywaydb.version>8.5.13</org.flywaydb.version>
