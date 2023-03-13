@@ -9,9 +9,9 @@ import jakarta.persistence.Index;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.util.HashSet;
@@ -65,7 +65,7 @@ public class Photo {
   )
   private Set<Tag> tags = new HashSet<>();
 
-  @OneToMany(mappedBy = "photo")
+  @Transient
   private Set<Asset> assets = new HashSet<>();
 
   @PrePersist
