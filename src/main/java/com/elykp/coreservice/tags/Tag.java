@@ -1,6 +1,7 @@
 package com.elykp.coreservice.tags;
 
 import com.elykp.coreservice.photos.Photo;
+import com.elykp.coreservice.tags.domain.TagRS;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.ColumnResult;
@@ -36,7 +37,7 @@ import lombok.Setter;
         "LIMIT 10",
     resultSetMapping = "Mapping.TagResponseDto")
 @SqlResultSetMapping(name = "Mapping.TagResponseDto",
-    classes = @ConstructorResult(targetClass = TagDto.class,
+    classes = @ConstructorResult(targetClass = TagRS.class,
         columns = {@ColumnResult(name = "id"),
             @ColumnResult(name = "name")
         }))
