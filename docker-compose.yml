@@ -1,8 +1,14 @@
 version: "3.9"
 
 services:
+  cache:
+    image: redis:7-alpine
+    restart: unless-stopped
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    env_file: .env
   core-service:
     build:
       context: .
-    ports:
-      - "8081:8081"
+    restart: on-failure
+    depends_on:
+      - cache
