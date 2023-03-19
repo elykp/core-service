@@ -1,22 +1,8 @@
-drop table if exists asset_entity cascade;
 drop table if exists photo_entity cascade;
 drop table if exists photo_tags cascade;
 drop table if exists tag_entity cascade;
 drop sequence if exists tag_entity_seq;
 create sequence tag_entity_seq start with 1 increment by 50;
-
-create table asset_entity
-(
-    id             bigserial   not null,
-    created_at     bigint,
-    height         integer     not null,
-    owner_id       varchar(36) not null,
-    responsive_key varchar(20) not null,
-    url            varchar(255) default '',
-    width          integer     not null,
-    photo_id       varchar(8),
-    primary key (id)
-);
 
 create table photo_entity
 (
@@ -48,11 +34,6 @@ create table tag_entity
 
 alter table if exists tag_entity
     add constraint UNIQUE_NAME_CONSTRAINT unique (name);
-
-alter table if exists asset_entity
-    add constraint FK_photo_asset
-        foreign key (photo_id)
-            references photo_entity;
 
 alter table if exists photo_tags
     add constraint FK_tag_photo_tags
