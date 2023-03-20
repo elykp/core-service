@@ -35,8 +35,8 @@ public class UserServiceImpl implements UserService {
   @Value("${oauth.authority-api-url}")
   private String authorityApiUrl;
 
-  public UserServiceImpl(RestTemplate restTemplate) {
-    this.restTemplate = restTemplate;
+  public UserServiceImpl() {
+    this.restTemplate = new RestTemplate();
   }
 
   @Override

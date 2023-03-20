@@ -2,7 +2,6 @@ package com.elykp.coreservice.configurations;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,14 +15,7 @@ public class SecurityConfig {
 
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    http.authorizeHttpRequests(authorize -> authorize
-            .requestMatchers(
-                HttpMethod.GET,
-                "/api/users/**",
-                "/api/photos/**",
-                "/api/tags/**",
-                "/error").permitAll()
-            .anyRequest().authenticated())
+    http.authorizeHttpRequests(authorize -> authorize.anyRequest().permitAll())
         .oauth2ResourceServer(OAuth2ResourceServerConfigurer::jwt);
     http.csrf().disable();
 

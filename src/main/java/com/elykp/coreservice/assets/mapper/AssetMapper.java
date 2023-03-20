@@ -1,7 +1,7 @@
 package com.elykp.coreservice.assets.mapper;
 
 import com.elykp.coreservice.assets.Asset;
-import com.elykp.coreservice.assets.dto.AssetRS;
+import com.elykp.coreservice.assets.domain.AssetRS;
 import org.mapstruct.Mapper;
 import org.mapstruct.NullValueMappingStrategy;
 import org.mapstruct.NullValuePropertyMappingStrategy;

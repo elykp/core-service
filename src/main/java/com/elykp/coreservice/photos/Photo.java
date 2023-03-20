@@ -1,6 +1,6 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.assets.Asset;
+import com.elykp.coreservice.assets.domain.AssetRS;
 import com.elykp.coreservice.tags.Tag;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +15,7 @@ import jakarta.persistence.Transient;
 import jakarta.persistence.UniqueConstraint;
 import java.time.Instant;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -66,7 +67,7 @@ public class Photo {
   private Set<Tag> tags = new HashSet<>();
 
   @Transient
-  private Set<Asset> assets = new HashSet<>();
+  private Map<String, AssetRS> assets = Map.of();
 
   @PrePersist
   protected void prePersist() {

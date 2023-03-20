@@ -1,4 +1,4 @@
-package com.elykp.coreservice.photos.dto;
+package com.elykp.coreservice.photos.domain;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

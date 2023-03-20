@@ -1,17 +1,15 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
-import com.elykp.coreservice.photos.dto.PhotoRS;
+import com.elykp.coreservice.photos.domain.CreatePhotoRQ;
+import com.elykp.coreservice.photos.domain.PhotoRS;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import org.springframework.web.server.ResponseStatusException;
 
 @RequiredArgsConstructor
 @RestController
@@ -29,20 +27,16 @@ public class PhotoController {
   }
 
   @GetMapping("{id}")
-  public ResponseEntity<Photo> getById(@PathVariable String id) {
-    Photo photo = photoRepository.findById(id)
-        .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
-    return ResponseEntity.ok(photo);
+  public ResponseEntity<PhotoRS> getById(@PathVariable String id) {
+    return ResponseEntity.ok(photoService.getById(id));
   }
 
   @PostMapping
-  @PreAuthorize("isAuthenticated()")
   public ResponseEntity<PhotoRS> create(
       JwtAuthenticationToken authentication,
       @Valid @RequestBody CreatePhotoRQ createPhotoRQ) {
     PhotoRS photo = photoService.createPhoto(createPhotoRQ,
         authentication.getTokenAttributes().get("sub").toString());
-
     return new ResponseEntity<>(photo, HttpStatus.CREATED);
   }
 }

@@ -1,6 +1,6 @@
-package com.elykp.coreservice.photos.dto;
+package com.elykp.coreservice.photos.domain;
 
-import com.elykp.coreservice.assets.dto.AssetRS;
+import com.elykp.coreservice.assets.domain.AssetRS;
 import com.elykp.coreservice.tags.Tag;
 import java.util.Map;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package com.elykp.coreservice.assets.dto;
+package com.elykp.coreservice.assets.domain;
 
 import lombok.Getter;
 import lombok.Setter;

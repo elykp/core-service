@@ -1,7 +1,8 @@
 package com.elykp.coreservice.photos;
 
-import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
-import com.elykp.coreservice.photos.dto.PhotoRS;
+import com.elykp.coreservice.assets.AssetService;
+import com.elykp.coreservice.photos.domain.CreatePhotoRQ;
+import com.elykp.coreservice.photos.domain.PhotoRS;
 import com.elykp.coreservice.photos.mapper.PhotoMapper;
 import com.elykp.coreservice.shared.service.HelperService;
 import com.elykp.coreservice.tags.Tag;
@@ -9,7 +10,9 @@ import com.elykp.coreservice.tags.TagRepository;
 import jakarta.transaction.Transactional;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +22,7 @@ public class PhotoServiceImpl implements PhotoService {
 
   private final TagRepository tagRepository;
 
+  private final AssetService assetService;
 
   @Override
   @Transactional
@@ -43,5 +47,15 @@ public class PhotoServiceImpl implements PhotoService {
     }
 
     return PhotoMapper.INSTANCE.mapPhotoToPhotoRS(photoRepository.save(photo));
+  }
+
+  @Override
+  public PhotoRS getById(String id) {
+    Photo photo = photoRepository.findById(id)
+        .orElseThrow(() -> new ResponseStatusException(
+            HttpStatus.NOT_FOUND));
+    var assets = assetService.getByPhotoId(photo.getId());
+    photo.setAssets(assets);
+    return PhotoMapper.INSTANCE.mapPhotoToPhotoRS(photo);
   }
 }
