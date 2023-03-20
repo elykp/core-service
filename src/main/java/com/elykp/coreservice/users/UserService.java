@@ -1,11 +1,15 @@
 package com.elykp.coreservice.users;
 
+import com.elykp.coreservice.users.domain.KcUserRS;
+import com.elykp.coreservice.users.domain.UpdateUserAttributeRQ;
 import java.util.Optional;
-import org.springframework.web.client.HttpClientErrorException;
 
 public interface UserService {
 
-  Optional<String> requestAccessTokenFromIS() throws HttpClientErrorException.Unauthorized;
+  Optional<String> requestAccessTokenFromIS();
 
-  KcUserResponseDto getKcUserById(String userId) throws HttpClientErrorException.NotFound;
+  KcUserRS getKcUserById(String userId);
+
+  void updateUserAttributes(String userId, UpdateUserAttributeRQ updateUserAttributeRQ,
+      String accessToken);
 }

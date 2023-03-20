@@ -3,7 +3,7 @@ package com.elykp.coreservice.photos;
 import com.elykp.coreservice.photos.dto.CreatePhotoRQ;
 import com.elykp.coreservice.photos.dto.PhotoRS;
 import com.elykp.coreservice.photos.mapper.PhotoMapper;
-import com.elykp.coreservice.users.services.HelperService;
+import com.elykp.coreservice.shared.service.HelperService;
 import com.elykp.coreservice.tags.Tag;
 import com.elykp.coreservice.tags.TagRepository;
 import jakarta.transaction.Transactional;
@@ -15,8 +15,6 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PhotoServiceImpl implements PhotoService {
 
-  private final HelperService helperService;
-
   private final PhotoRepository photoRepository;
 
   private final TagRepository tagRepository;
@@ -26,7 +24,7 @@ public class PhotoServiceImpl implements PhotoService {
   @Transactional
   public PhotoRS createPhoto(CreatePhotoRQ createPhotoRQ, String userId) {
     Photo photo = new Photo();
-    photo.setId(helperService.generateNanoId());
+    photo.setId(HelperService.generateNanoId());
     photo.setTitle(createPhotoRQ.getTitle());
     photo.setBlurhash(createPhotoRQ.getBlurhash());
     photo.setNsfw(createPhotoRQ.getNsfw() != null ? createPhotoRQ.getNsfw() : false);

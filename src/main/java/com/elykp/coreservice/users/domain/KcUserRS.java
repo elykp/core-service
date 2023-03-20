@@ -1,12 +1,13 @@
-package com.elykp.coreservice.users;
+package com.elykp.coreservice.users.domain;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-public class KcUserResponseDto {
+@Setter
+public class KcUserRS {
   private String id;
   private Long createdTimestamp;
   private String username;
@@ -16,5 +17,5 @@ public class KcUserResponseDto {
   private String firstName;
   private String lastName;
   private String email;
-  private Map<String, List<String>> attributes = new HashMap<>();
+  private Map<String, String[]> attributes = new HashMap<>();
 }
