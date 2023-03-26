@@ -3,10 +3,12 @@ package com.elykp.coreservice.tags;
 import com.elykp.coreservice.shared.query.PageQueryBuilder;
 import com.elykp.coreservice.shared.query.PageQueryParams;
 import com.elykp.coreservice.tags.domain.CreateTagRQ;
+import com.elykp.coreservice.tags.domain.TagQueryRS;
 import com.elykp.coreservice.tags.domain.TagRS;
 import com.elykp.coreservice.tags.mapper.TagMapper;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.BeanParam;
+import jakarta.ws.rs.QueryParam;
 import java.util.List;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
@@ -52,6 +54,11 @@ public class TagController {
       results = tagRepository.findByNameIgnoreCaseContains(query, pageRequest);
     }
     return ResponseEntity.ok(results.map(TagMapper.INSTANCE::mapTagToTagRS));
+  }
+
+  @GetMapping("related")
+  public ResponseEntity<List<TagQueryRS>> getRelatedTags(@QueryParam("q") String q) {
+    return ResponseEntity.ok(tagRepository.findRelatedTagsByQueryIgnoreCaseContains(q));
   }
 
   @GetMapping("/trending")

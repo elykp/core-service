@@ -1,6 +1,7 @@
 package com.elykp.coreservice.tags;
 
 import com.elykp.coreservice.photos.Photo;
+import com.elykp.coreservice.tags.domain.TagQueryRS;
 import com.elykp.coreservice.tags.domain.TagRS;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
@@ -28,18 +29,45 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @Entity
-@NamedNativeQuery(name = "Tag.findTrendingTags",
-    query = "SELECT tag_entity.id, tag_entity.name, COUNT(*) " +
-        "FROM tag_entity " +
-        "JOIN photo_tags ON photo_tags.tag_id = tag_entity.id " +
+@NamedNativeQuery(
+    name = "Tag.findTrendingTags",
+    query = "SELECT dbo.tag_entity.id, dbo.tag_entity.name, COUNT(*) " +
+        "FROM dbo.tag_entity " +
+        "JOIN dbo.photo_tags ON photo_tags.tag_id = tag_entity.id " +
         "GROUP BY tag_entity.id, tag_entity.name " +
         "ORDER BY COUNT(*) DESC " +
         "LIMIT 10",
-    resultSetMapping = "Mapping.TagResponseDto")
-@SqlResultSetMapping(name = "Mapping.TagResponseDto",
+    resultSetMapping = "Mapping.TagRS"
+)
+@NamedNativeQuery(
+    name = "Tag.findRelatedTagsByQueryIgnoreCaseContains",
+    query = """
+                SELECT dbo.tag_entity.id, dbo.tag_entity.name, COUNT(*), ts_headline('english',
+                                                   dbo.tag_entity.name,
+                                                   to_tsquery('english', :query),
+                                                   'HighlightAll=true, StartSel=<strong>, StopSel=</strong>'
+                                                  ) as highlighted
+                FROM dbo.tag_entity
+                JOIN dbo.photo_tags ON photo_tags.tag_id = tag_entity.id
+                WHERE to_tsquery(:query) @@ to_tsvector(tag_entity.name)
+                GROUP BY tag_entity.id, tag_entity.name
+                ORDER BY COUNT(*) DESC
+                LIMIT 10
+        """,
+    resultSetMapping = "Mapping.TagQueryRS"
+)
+
+@SqlResultSetMapping(name = "Mapping.TagRS",
     classes = @ConstructorResult(targetClass = TagRS.class,
         columns = {@ColumnResult(name = "id"),
             @ColumnResult(name = "name")
+        }))
+@SqlResultSetMapping(name = "Mapping.TagQueryRS",
+    classes = @ConstructorResult(targetClass = TagQueryRS.class,
+        columns = {@ColumnResult(name = "id"),
+            @ColumnResult(name = "name"),
+            @ColumnResult(name = "count"),
+            @ColumnResult(name = "highlighted")
         }))
 @Table(name = "tag_entity", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"name"}, name = "UNIQUE_NAME_CONSTRAINT")
