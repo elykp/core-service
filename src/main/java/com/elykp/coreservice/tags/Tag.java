@@ -44,12 +44,12 @@ import lombok.Setter;
     query = """
                 SELECT dbo.tag_entity.id, dbo.tag_entity.name, COUNT(*), ts_headline('english',
                                                    dbo.tag_entity.name,
-                                                   to_tsquery('english', :query),
+                                                   plainto_tsquery('english', :query),
                                                    'HighlightAll=true, StartSel=<strong>, StopSel=</strong>'
                                                   ) as highlighted
                 FROM dbo.tag_entity
                 JOIN dbo.photo_tags ON photo_tags.tag_id = tag_entity.id
-                WHERE to_tsquery(:query) @@ to_tsvector(tag_entity.name)
+                WHERE plainto_tsquery(:query) @@ to_tsvector(tag_entity.name)
                 GROUP BY tag_entity.id, tag_entity.name
                 ORDER BY COUNT(*) DESC
                 LIMIT 10
